@@ -1,0 +1,8 @@
+vsphere_password = ""  
+vsphere_user = ""
+vsphere_server = ""
+vsphere_datacenter = ""
+vsphere_compute_cluster = ""
+vsphere_datastore = ""
+vsphere_resource_pool = ""
+vsphere_network = ""
