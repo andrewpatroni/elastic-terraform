@@ -1,0 +1,7 @@
+google_project = ""
+google_region = "us-west2"
+google_machine_type = "f1-micro"
+google_instance_image = "centos-cloud/centos-7"
+google_ssh_key = ""
+google_node_count = "3"
+google_zone = ""

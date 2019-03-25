@@ -7,3 +7,6 @@
 
 # .tfvars files
 *.tfvars
+
+# Google gcp service cred file
+**/gcp-svc-account.json
