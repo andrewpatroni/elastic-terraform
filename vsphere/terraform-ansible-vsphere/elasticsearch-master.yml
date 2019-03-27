@@ -1,0 +1,54 @@
+- name: Deploy Elasticsearch with a Custom Config - Security disabled
+  hosts: all
+  ignore_errors: true
+  roles:
+    - role: .ansible/elastic.elasticsearch
+  vars:
+    es_instance_name: primary
+    es_xpack_features: ["alerting","monitoring","graph","ml"]
+    es_data_dirs:
+      - "/es_data"
+    es_version: "6.6.2"
+    es_config:
+      node.name: "{{ hname }}"
+      discovery.zen.ping.unicast.hosts: "{{ prihost }}"
+      cluster.name: "Patroni Logging Cluster"
+      #discovery.zen.ping.unicast.hosts: ["192.168.224.71", "192.168.224.72", "192.168.224.73" ]
+      network.host: ["_site_", "_local_"]
+      http.port: 9200
+      node.master: "true"
+      node.data: "true"
+      node.ingest: "true"
+      xpack:
+        monitoring:
+          collection:
+            enabled: true
+    es_scripts: false
+    m_lock_enabled: false
+    es_templates: false
+    es_version_lock: true
+    es_heap_size: 3g
+    es_start_service: true
+    es_plugins_reinstall: true
+    es_api_port: 9200
+    es_plugins:
+      - plugin: ingest-geoip
+      - plugin: ingest-user-agent
+      - plugin: mapper-size
+      - plugin: repository-s3
+  tasks:
+    - name: Open Transport port
+      firewalld:
+        port: 9300/tcp
+        permanent: true
+        state: enabled
+        immediate: yes
+    - name: Open HTTP port
+      firewalld:
+        port: 9200/tcp
+        permanent: true
+        state: enabled
+        immediate: yes
+    - name: Set hostname
+      hostname:
+        name: "{{ hname }}"

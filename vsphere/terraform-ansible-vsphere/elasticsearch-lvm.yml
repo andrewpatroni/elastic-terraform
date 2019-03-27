@@ -1,0 +1,23 @@
+---
+- hosts: all
+  tasks:
+  - name: Create New LVM Volume Group
+    lvg:
+      vg: elastic
+      pvs: /dev/sdb
+  - name: Create New LVM Logical Volume
+    lvol:
+      vg: elastic
+      lv: data
+      size: 100%FREE
+  - name: Create New Filesystem on LVM Logical Volume
+    filesystem:
+      fstype: xfs
+      dev: /dev/elastic/data
+  - name: Mount the new Filesystem
+    mount:
+      boot: yes
+      fstype: xfs
+      path: /es_data
+      src: /dev/elastic/data
+      state: mounted
