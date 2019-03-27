@@ -5,7 +5,7 @@ resource "vsphere_virtual_machine" "elastic_master" {
     datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
     num_cpus         = 6
-    memory           = 4096
+    memory           = 6144
     guest_id         = "centos7_64Guest"
 
     network_interface {
@@ -26,7 +26,10 @@ resource "vsphere_virtual_machine" "elastic_master" {
 
     clone {
         template_uuid = "${data.vsphere_virtual_machine.centos7_template.id}"
-    }
+    }  
+    provisioner "local-exec" {
+        command = "sleep 30 && ansible-galaxy --roles-path=.ansible/ install elastic.elasticsearch && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -u root --private-key ../../../andrewpatroni-github -i '${self.default_ip_address},'  elasticsearch-lvm.yml && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -u root --private-key ../../../andrewpatroni-github -i '${self.default_ip_address},' --extra-vars 'prihost=${vsphere_virtual_machine.elastic_master.0.default_ip_address} hname=${self.name}' elasticsearch-master.yml"
+    }  
 }
 resource "vsphere_virtual_machine" "elastic_data" {
     count            = 3
@@ -35,7 +38,7 @@ resource "vsphere_virtual_machine" "elastic_data" {
     datastore_id     = "${data.vsphere_datastore.datastore.id}"
 
     num_cpus         = 6
-    memory           = 4096
+    memory           = 6144
     guest_id         = "centos7_64Guest"
 
     network_interface {
@@ -56,5 +59,8 @@ resource "vsphere_virtual_machine" "elastic_data" {
 
     clone {
         template_uuid = "${data.vsphere_virtual_machine.centos7_template.id}"
+    }
+    provisioner "local-exec" {
+        command = "sleep 30 && ansible-galaxy --roles-path=.ansible/ install elastic.elasticsearch && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -u root --private-key ../../../andrewpatroni-github -i '${self.default_ip_address},'  elasticsearch-lvm.yml && ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -u root --private-key ../../../andrewpatroni-github -i '${self.default_ip_address},' --extra-vars 'prihost=${vsphere_virtual_machine.elastic_master.0.default_ip_address} hname=${self.name}' elasticsearch-data.yml"
     }
 }
