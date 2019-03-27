@@ -1,5 +1,10 @@
 #  Local .terraform directories
 **/.terraform/*
+# local .ansible directories
+**/.ansible/*
+
+# ansible retry files
+**/*.retry
 
 # .tfstate files
 *.tfstate
