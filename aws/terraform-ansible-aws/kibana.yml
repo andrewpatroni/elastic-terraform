@@ -1,0 +1,19 @@
+- name: Deploy Elasticsearch with a Custom Config - Security disabled
+  hosts: all
+  ignore_errors: true
+  roles:
+    - role: .ansible/geerlingguy.kibana
+  vars:
+    kibana_elasticsearch_url: "http://{{ prihost }}:9200"
+    kibana_server_host: "{{ kibip }}"
+    kibana_package: "kibana-{{ es_live_version }}"
+  tasks:
+    - name: Open Kibana port
+      firewalld:
+        port: 5601/tcp
+        permanent: true
+        state: enabled
+        immediate: yes
+    - name: Set hostname
+      hostname:
+        name: "{{ hname }}"
