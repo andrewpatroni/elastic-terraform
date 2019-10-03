@@ -1,0 +1,27 @@
+# ======================== Elasticsearch Configuration =========================
+# ---------------------------------- Cluster -----------------------------------
+cluster.name: ec2-testing
+# ------------------------------------ Node ------------------------------------
+#node.name: node-1
+#node.attr.rack: r1
+# ----------------------------------- Paths ------------------------------------
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+# ----------------------------------- Memory -----------------------------------
+#bootstrap.memory_lock: true
+# ---------------------------------- Network -----------------------------------
+network.host: _ec2_
+#http.port: 9200
+# --------------------------------- Discovery ----------------------------------
+#discovery.seed_hosts: ["host1", "host2"]
+discovery.seed_providers: ec2
+#discovery.ec2.availability_zones: ["ap-northeast-1a","ap-northeast-1b","ap-northeast-1c","ap-northeast-1d"]
+discovery.ec2.endpoint: ec2.ap-northeast-1.amazonaws.com # NOTE: change this to match your use case
+discovery.ec2.tag.role: master,data
+cluster.initial_master_nodes: ["elastic-master-az1", "elastic-master-az2", "elastic-master-az3"]
+# ---------------------------------- Gateway -----------------------------------
+#gateway.recover_after_nodes: 3
+# ---------------------------------- Various -----------------------------------
+cloud.node.auto_attributes: true
+cluster.routing.allocation.awareness.attributes: aws_availability_zone
+#action.destructive_requires_name: true
