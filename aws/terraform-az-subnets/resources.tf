@@ -86,9 +86,10 @@ resource "aws_security_group" "egress" {
 
 ### AZ 1
 resource "aws_subnet" "subnet_az1" {
-  vpc_id = "${aws_vpc.elastic-vpc.id}"
-  cidr_block = "${var.az1_subnet_cidr_block}"
-  availability_zone = "${var.aws_avail_zone_1}"
+  vpc_id                  = "${aws_vpc.elastic-vpc.id}"
+  cidr_block              = "${var.az1_subnet_cidr_block}"
+  availability_zone       = "${var.aws_avail_zone_1}"
+  map_public_ip_on_launch = true
   tags = {
       Name = "Elastic AZ1"
   }
@@ -144,9 +145,10 @@ resource "aws_instance" "elastic-master-az1" {
 
 ### AZ 2
 resource "aws_subnet" "subnet_az2" {
-  vpc_id = "${aws_vpc.elastic-vpc.id}"
-  cidr_block = "${var.az2_subnet_cidr_block}"
-  availability_zone = "${var.aws_avail_zone_2}"
+  vpc_id                  = "${aws_vpc.elastic-vpc.id}"
+  cidr_block              = "${var.az2_subnet_cidr_block}"
+  availability_zone       = "${var.aws_avail_zone_2}"
+  map_public_ip_on_launch = true
   tags = {
       Name = "Elastic AZ2"
   }
@@ -202,9 +204,10 @@ resource "aws_instance" "elastic-master-az2" {
 
 ### AZ 3
 resource "aws_subnet" "subnet_az3" {
-  vpc_id = "${aws_vpc.elastic-vpc.id}"
-  cidr_block = "${var.az3_subnet_cidr_block}"
-  availability_zone = "${var.aws_avail_zone_3}"
+  vpc_id                  = "${aws_vpc.elastic-vpc.id}"
+  cidr_block              = "${var.az3_subnet_cidr_block}"
+  availability_zone       = "${var.aws_avail_zone_3}"
+  map_public_ip_on_launch = true
   tags = {
       Name = "Elastic AZ3"
   }
