@@ -137,7 +137,7 @@ resource "aws_instance" "elastic-master-az1" {
     provisioner "remote-exec" {
         inline = [
             "sudo mv /tmp/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml",
-            "echo 'node.name: [\"${self.tags.Name}\"]' | sudo tee -a /etc/elasticsearch/elasticsearch.yml",
+            "echo 'node.name: \"${self.tags.Name}\"' | sudo tee -a /etc/elasticsearch/elasticsearch.yml",
             "sudo systemctl start elasticsearch"
         ]
     }
@@ -196,7 +196,7 @@ resource "aws_instance" "elastic-master-az2" {
     provisioner "remote-exec" {
         inline = [
             "sudo mv /tmp/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml",
-            "echo 'node.name: [\"${self.tags.Name}\"]' | sudo tee -a /etc/elasticsearch/elasticsearch.yml",
+            "echo 'node.name: \"${self.tags.Name}\"' | sudo tee -a /etc/elasticsearch/elasticsearch.yml",
             "sudo systemctl start elasticsearch"
         ]
     }
@@ -255,7 +255,7 @@ resource "aws_instance" "elastic-master-az3" {
     provisioner "remote-exec" {
         inline = [
             "sudo mv /tmp/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml",
-            "echo 'node.name: [\"${self.tags.Name}\"]' | sudo tee -a /etc/elasticsearch/elasticsearch.yml",
+            "echo 'node.name: \"${self.tags.Name}\"' | sudo tee -a /etc/elasticsearch/elasticsearch.yml",
             "sudo systemctl start elasticsearch"
         ]
     }
