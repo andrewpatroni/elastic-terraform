@@ -13,5 +13,8 @@
 # .tfvars files
 *.tfvars
 
+# .priv files
+*.priv
+
 # Google gcp service cred file
 **/gcp-svc-account.json
